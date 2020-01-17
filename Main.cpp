@@ -5,7 +5,7 @@
 
 using namespace std;
 
-//Ryan Thammakhoune. Linked List. Allows user to enter student info and prints it.
+//Ryan Thammakhoune. Linked List2. Allows user to enter student info and prints it. Can also average the ids and delete student info.
 
 void add(Node* head, char* fname, char* lname, int id, float GPA);
 void print(Node* next); //Initialize functions
@@ -64,32 +64,32 @@ int main() {
   }
 }
 
-void  average(Node* head, float ave, float num) {
-  if (head->getNext()==NULL){
-    ave=ave+head->getStudent()->getID();
+void  average(Node* head, float ave, float num) { //Average function
+  if (head->getNext()==NULL){ //If this is the last node
+    ave=ave+head->getStudent()->getID(); //Add to the sum
     num++;
-    cout << ave/num << endl;
+    cout << ave/num << endl; //Print
   }
   else {
-    ave = ave+head->getStudent()->getID();
+    ave = ave+head->getStudent()->getID(); //Add to the sum
     num++;
-    average(head->getNext(), ave, num);
+    average(head->getNext(), ave, num); //Do the same for the next node
   }
 }
 
 void delete_(int id, Node* head) {
-  if (head->getStudent()->getID() == id) {
-    if (head->getNext() == NULL) {
-      first = NULL;
-      head ->~Node();
+  if (head->getStudent()->getID() == id) { //If the id matches
+    if (head->getNext() == NULL) {//If the node is the first
+      first = NULL; //First is null now
+      head ->~Node(); //Delete the node
     }
-    else {
+    else { //If it's not the next node
       first = head -> getNext();
       head-> ~Node();
     }
   
   }
-  else {
+  else { //Else, search the next node
     delete_(id, head->getNext());
   }
 }
@@ -102,26 +102,26 @@ void add(Node* head, char* fname, char* lname, int id, float gpa) { //Adds stude
     first  -> setStudent(student);
   }
   else {
-    if (student->getID() < first->getStudent()->getID()) {
+    if (student->getID() < first->getStudent()->getID()) { //If the student id is less than the one of the node
       Node* newNode = new Node(null);
       newNode -> setStudent(first ->getStudent());
       newNode -> setNext(first->getNext());
       first -> setStudent(student);
       first -> setNext(newNode);
     }
-    if (head -> getNext() == NULL) {
+    if (head -> getNext() == NULL) { //If the node is the last
       Node* newNode2 = new Node(null);
       newNode2->setStudent(student);
       head->setNext(newNode2);
     }
-    if(student->getID()<head->getNext()->getStudent()->getID()){
+    if(student->getID()<head->getNext()->getStudent()->getID()){ //If the id is less than the one before
       Node* newNode3 =new Node(null);
       newNode3->setStudent(student);
       newNode3->setNext(head->getNext());
       head->setNext(newNode3);
     }
     else {
-      add(head->getNext(), fname, lname, id, gpa);
+      add(head->getNext(), fname, lname, id, gpa); //Else keep searching
     }
   }
 }
